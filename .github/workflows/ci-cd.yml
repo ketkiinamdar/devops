@@ -77,7 +77,7 @@ jobs:
 
     # Self-hosted runner is used because
     # Docker container must remain running
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
 
