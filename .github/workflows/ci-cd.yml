@@ -162,10 +162,6 @@ jobs:
       - name: View Log Analyzer Output
         run: |
           echo "=== FETCHING CONTAINER OUTPUT ==="
-          docker logs log_analyzer
+          docker logs log-analyzer
           echo "================================="
 
-      - name: Verify Docker Container Status
-        run: |
-          docker ps
-          echo "Log Analyzer deployment completed successfully."
