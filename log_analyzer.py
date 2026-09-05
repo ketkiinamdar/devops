@@ -48,6 +48,6 @@ if __name__ == "__main__":
     while True:
         log = input("Enter log: ")
 
-        result = analyze_log(log)
+        result = analyze_log_file(log)
 
         print(f"Log Level: {result}")
