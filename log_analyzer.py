@@ -15,6 +15,9 @@ def analyze_log_file(filename):
             elif "ERROR" in line:
                 error_count += 1
 
+            else:
+                return "UNKNOWN"
+
     return info_count, warning_count, error_count
 
 def get_health_status(error_count):
@@ -41,3 +44,10 @@ def display_report(filename):
 
 if __name__ == "__main__":
     display_report("app.log")
+
+    while True:
+        log = input("Enter log: ")
+
+        result = analyze_log(log)
+
+        print(f"Log Level: {result}")
