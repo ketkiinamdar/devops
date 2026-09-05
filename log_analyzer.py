@@ -41,7 +41,7 @@ def display_report(filename):
     print(f"\nApplication Health: {health}")
     print("================================")
 
-
+import time
 if __name__ == "__main__":
     display_report("app.log")
     print("Log Analyzer service is running continuously...", flush=True)
