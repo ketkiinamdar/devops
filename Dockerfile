@@ -7,6 +7,7 @@ WORKDIR /app
 # Copy application files
 COPY log_analyzer.py .
 COPY requirements.txt .
+COPY app.log .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
