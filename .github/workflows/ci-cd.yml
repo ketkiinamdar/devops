@@ -150,3 +150,22 @@ jobs:
           docker ps
 
           echo "Log Analyzer deployment completed successfully."
+
+      # --------------------------------------
+      # Verify Deployment & Check Output
+      # --------------------------------------
+
+      # Give the container 3 seconds to boot up and print its initial report
+      - name: Wait for application startup
+        run: sleep 3
+
+      - name: View Log Analyzer Output
+        run: |
+          echo "=== FETCHING CONTAINER OUTPUT ==="
+          docker logs log_analyzer
+          echo "================================="
+
+      - name: Verify Docker Container Status
+        run: |
+          docker ps
+          echo "Log Analyzer deployment completed successfully."
