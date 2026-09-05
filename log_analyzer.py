@@ -1,3 +1,4 @@
+import time
 def analyze_log_file(filename):
     info_count = 0
     warning_count = 0
@@ -16,7 +17,7 @@ def analyze_log_file(filename):
                 error_count += 1
 
             else:
-                return "UNKNOWN"
+                continue
 
     return info_count, warning_count, error_count
 
@@ -41,7 +42,7 @@ def display_report(filename):
     print(f"\nApplication Health: {health}")
     print("================================")
 
-import time
+
 if __name__ == "__main__":
     display_report("app.log")
     print("Log Analyzer service is running continuously...", flush=True)
