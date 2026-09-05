@@ -44,10 +44,3 @@ def display_report(filename):
 
 if __name__ == "__main__":
     display_report("app.log")
-
-    while True:
-        log = input("Enter log: ")
-
-        result = analyze_log_file(log)
-
-        print(f"Log Level: {result}")
