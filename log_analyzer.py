@@ -44,3 +44,8 @@ def display_report(filename):
 
 if __name__ == "__main__":
     display_report("app.log")
+    print("Log Analyzer service is running continuously...", flush=True)
+    
+    # Keeps the Python process (and the Docker container) alive safely in the background
+    while True:
+        time.sleep(30)
