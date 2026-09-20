@@ -8,7 +8,14 @@ services:
       - "9090:9090"
 
     volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
+    networks:
+      - monitoring
+
+    depends_on:
+      - cadvisor
+
 
   grafana:
     image: grafana/grafana:latest
@@ -17,5 +24,30 @@ services:
     ports:
       - "3000:3000"
 
+    networks:
+      - monitoring
+
     depends_on:
       - prometheus
+
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+
+    ports:
+      - "8080:8080"
+
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker:/var/lib/docker:ro
+
+    networks:
+      - monitoring
+
+
+networks:
+  monitoring:
+    driver: bridge
