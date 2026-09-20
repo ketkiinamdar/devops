@@ -39,7 +39,7 @@ jobs:
       # --------------------------------------
       - name: Set up Prometheus and Grafana
         run: |
-          docker-compose -f docker-compose.yml up -d
+          docker compose -f docker-compose.yml up -d
 
       - name: Wait for Prometheus and Grafana to be ready
         run: |
