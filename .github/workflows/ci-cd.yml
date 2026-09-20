@@ -75,10 +75,27 @@ jobs:
           docker ps
 
       - name: Verify Prometheus and Grafana
+        shell: powershell
         run: |
-          echo "Verifying Prometheus and Grafana..."
-          curl -f http://localhost:9090 || { echo "Prometheus is not running"; exit 1; }
-          curl -f http://localhost:3000 || { echo "Grafana is not running"; exit 1; }
+          Write-Host "Verifying Prometheus and Grafana..."
+
+          try {
+              Invoke-WebRequest -Uri "http://localhost:9090/-/healthy" -UseBasicParsing -TimeoutSec 10
+              Write-Host "Prometheus is running successfully"
+          }
+          catch {
+              Write-Host "Prometheus is not running"
+              exit 1
+          }
+
+          try {
+              Invoke-WebRequest -Uri "http://localhost:3000/api/health" -UseBasicParsing -TimeoutSec 10
+              Write-Host "Grafana is running successfully"
+          }
+          catch {
+              Write-Host "Grafana is not running"
+              exit 1
+          }
 
       # --------------------------------------
       # Setup Python
