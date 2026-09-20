@@ -23,7 +23,7 @@ jobs:
 
     name: Automated Tests
 
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
 
@@ -34,27 +34,51 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
       
-      # --------------------------------------
-      # Setup Prometheus and Grafana
-      # --------------------------------------
-      - name: Set up Prometheus and Grafana
-        run: |
-          docker compose -f docker-compose.yml up -d
-
-      - name: Wait for Prometheus and Grafana to be ready
-        run: |
-          echo "Waiting for Prometheus and Grafana to be ready..."
-          sleep 20  # Adjust the sleep duration as needed
+      #--------------------------------------------------
+      # Setup Prometheus and Grafana using Terraform
+      #--------------------------------------------------
+      - name: Setup Prometheus and Grafana using Terraform
+        uses: hashicorp/setup-terraform@v3
       
-      - name: Show running Docker containers
-        run: |
-          docker ps
+      - name: Check Docker
+        run: docker version
 
-      - name: Verify Prometheus and Grafana
-        run: |
-          echo "Verifying Prometheus and Grafana..."
-          curl -f http://localhost:9090 || { echo "Prometheus is not running"; exit 1; }
-          curl -f http://localhost:3000 || { echo "Grafana is not running"; exit 1; }
+      - name: Check Terraform
+        run: terraform version
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+
+      - name: Verify containers
+        run: docker ps
+      
+      # -------------------------------------------------
+      # Setup Prometheus and Grafana using Docker Compose
+      # -------------------------------------------------
+      # - name: Set up Prometheus and Grafana using Docker Compose
+      #   run: |
+      #     docker compose -f docker-compose.yml up -d
+
+      # - name: Wait for Prometheus and Grafana to be ready
+      #   run: |
+      #     echo "Waiting for Prometheus and Grafana to be ready..."
+      #     sleep 20  # Adjust the sleep duration as needed
+      
+      # - name: Show running Docker containers
+      #   run: |
+      #     docker ps
+
+      # - name: Verify Prometheus and Grafana
+      #   run: |
+      #     echo "Verifying Prometheus and Grafana..."
+      #     curl -f http://localhost:9090 || { echo "Prometheus is not running"; exit 1; }
+      #     curl -f http://localhost:3000 || { echo "Grafana is not running"; exit 1; }
 
       # --------------------------------------
       # Setup Python
