@@ -1,0 +1,18 @@
+Container Status - promql
+count by (name) (
+  container_last_seen{name=~"prometheus|grafana|cadvisor"}
+)
+
+CPU Usage - promql
+sum by (name) (
+  rate(container_cpu_usage_seconds_total{
+    name=~"prometheus|grafana|cadvisor"
+  }[5m])
+) * 100
+
+Memory Usage - promql
+sum by (name) (
+  container_memory_usage_bytes{
+    name=~"prometheus|grafana|cadvisor"
+  }
+)
