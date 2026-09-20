@@ -33,7 +33,28 @@ jobs:
 
       - name: Checkout Code
         uses: actions/checkout@v4
+      
+      # --------------------------------------
+      # Setup Prometheus and Grafana
+      # --------------------------------------
+      - name: Set up Prometheus and Grafana
+        run: |
+          docker-compose -f docker-compose.yml up -d
 
+      - name: Wait for Prometheus and Grafana to be ready
+        run: |
+          echo "Waiting for Prometheus and Grafana to be ready..."
+          sleep 20  # Adjust the sleep duration as needed
+      
+      - name: Show running Docker containers
+        run: |
+          docker ps
+
+      - name: Verify Prometheus and Grafana
+        run: |
+          echo "Verifying Prometheus and Grafana..."
+          curl -f http://localhost:9090 || { echo "Prometheus is not running"; exit 1; }
+          curl -f http://localhost:3000 || { echo "Grafana is not running"; exit 1; }
 
       # --------------------------------------
       # Setup Python
